@@ -1,0 +1,697 @@
+/* =========================================
+   MANKATHA AUTH PAGES
+   SUNFLOWER + SOFT PASTEL THEME
+   ========================================= */
+
+.auth-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  overflow: hidden;
+
+  padding: 40px 20px;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(249, 214, 107, 0.35),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(248, 207, 192, 0.35),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #fff9ed,
+      #fff5df,
+      #fff9ed
+    );
+
+  font-family: "DM Sans", sans-serif;
+}
+
+
+/* =========================================
+   SOFT SUN
+   ========================================= */
+
+.soft-sun {
+  position: absolute;
+
+  width: 360px;
+  height: 360px;
+
+  top: -190px;
+  right: -130px;
+
+  border-radius: 50%;
+
+  background: #f9df88;
+
+  opacity: 0.45;
+
+  box-shadow:
+    0 0 80px rgba(249, 214, 107, 0.35);
+}
+
+
+/* =========================================
+   MAIN CARD
+   ========================================= */
+
+.auth-card {
+  width: 430px;
+  max-width: 100%;
+
+  position: relative;
+  z-index: 10;
+
+  padding: 42px 48px 32px;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  border: 1px solid rgba(235, 210, 164, 0.65);
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 25px 70px rgba(111, 83, 40, 0.13);
+
+  backdrop-filter: blur(16px);
+
+  animation: cardAppear 0.7s ease;
+}
+
+
+/* =========================================
+   LOGO
+   ========================================= */
+
+.auth-logo {
+  text-align: center;
+
+  margin-bottom: 27px;
+}
+
+.mini-sun {
+  width: 42px;
+  height: 42px;
+
+  margin: 0 auto 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fff0ae;
+
+  color: #e5ad43;
+
+  font-size: 29px;
+
+  box-shadow:
+    0 5px 15px rgba(230, 180, 70, 0.15);
+}
+
+.auth-logo h1 {
+  margin: 0;
+
+  color: #6b5037;
+
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 39px;
+
+  font-weight: 400;
+
+  letter-spacing: 0.5px;
+}
+
+.auth-logo p {
+  margin: 1px 0 0;
+
+  color: #a09080;
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   HEADING
+   ========================================= */
+
+.auth-heading {
+  text-align: center;
+
+  margin-bottom: 25px;
+}
+
+.auth-heading h2 {
+  margin: 0 0 6px;
+
+  color: #51463d;
+
+  font-size: 23px;
+
+  font-weight: 700;
+}
+
+.auth-heading p {
+  margin: 0;
+
+  color: #998b7d;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   INPUTS
+   ========================================= */
+
+.input-group {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 14px;
+}
+
+.input-icon {
+  position: absolute;
+
+  left: 17px;
+
+  color: #9c8d7e;
+
+  font-size: 16px;
+
+  z-index: 2;
+}
+
+.input-group input {
+  width: 100%;
+
+  height: 52px;
+
+  padding: 0 17px 0 47px;
+
+  border: 1px solid #e8dcc9;
+
+  border-radius: 15px;
+
+  outline: none;
+
+  background: rgba(255, 252, 245, 0.8);
+
+  color: #5d5146;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  transition: all 0.25s ease;
+}
+
+.input-group input::placeholder {
+  color: #b0a395;
+}
+
+.input-group input:focus {
+  background: white;
+
+  border-color: #eac96f;
+
+  box-shadow:
+    0 0 0 4px rgba(249, 223, 136, 0.22);
+}
+
+
+/* =========================================
+   LOGIN BUTTON
+   ========================================= */
+
+.auth-button {
+  width: 100%;
+
+  height: 52px;
+
+  margin-top: 9px;
+
+  border: none;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f9d66b,
+      #f5c65e
+    );
+
+  color: #5a4933;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(224, 174, 66, 0.20);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.auth-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px rgba(224, 174, 66, 0.27);
+}
+
+.auth-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.auth-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.auth-footer {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 23px;
+
+  font-size: 12px;
+
+  color: #968779;
+}
+
+.auth-footer a {
+  color: #d79732;
+
+  font-weight: 700;
+
+  transition: 0.2s ease;
+}
+
+.auth-footer a:hover {
+  color: #b87920;
+}
+
+
+/* =========================================
+   BOTTOM NOTE
+   ========================================= */
+
+.auth-bottom-note {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  margin-top: 25px;
+
+  color: #b09f8b;
+
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 14px;
+}
+
+.auth-bottom-note span {
+  color: #e6b84e;
+}
+
+
+/* =========================================
+   ERROR
+   ========================================= */
+
+.error-message {
+  margin-bottom: 16px;
+
+  padding: 11px 14px;
+
+  border-radius: 12px;
+
+  background: #fde7e3;
+
+  border: 1px solid #f2c8c0;
+
+  color: #a65e54;
+
+  font-size: 12px;
+
+  text-align: center;
+}
+
+
+/* =========================================
+   FLOATING FLOWERS
+   ========================================= */
+
+.floating-flower {
+  position: absolute;
+
+  z-index: 2;
+
+  user-select: none;
+
+  filter:
+    drop-shadow(
+      0 8px 12px rgba(111, 83, 40, 0.10)
+    );
+}
+
+.flower-one {
+  left: 8%;
+
+  bottom: 15%;
+
+  font-size: 105px;
+
+  transform: rotate(-8deg);
+
+  animation: flowerFloat 5s ease-in-out infinite;
+}
+
+.flower-two {
+  left: 17%;
+
+  bottom: 7%;
+
+  font-size: 70px;
+
+  transform: rotate(10deg);
+
+  animation: flowerFloat 6s ease-in-out infinite;
+}
+
+.flower-three {
+  right: 10%;
+
+  top: 17%;
+
+  font-size: 55px;
+
+  animation: flowerFloat 5.5s ease-in-out infinite;
+}
+
+
+/* =========================================
+   BUTTERFLIES
+   ========================================= */
+
+.floating-butterfly {
+  position: absolute;
+
+  z-index: 3;
+
+  font-size: 24px;
+
+  opacity: 0.7;
+
+  animation: butterflyFloat 6s ease-in-out infinite;
+}
+
+.butterfly-one {
+  left: 23%;
+  top: 23%;
+}
+
+.butterfly-two {
+  right: 24%;
+  bottom: 23%;
+
+  animation-delay: 2s;
+}
+
+
+/* =========================================
+   SIDE MESSAGE
+   ========================================= */
+
+.auth-side-message {
+  position: absolute;
+
+  z-index: 3;
+
+  color: #80654d;
+
+  text-align: center;
+}
+
+.left-message {
+  left: 9%;
+
+  top: 23%;
+}
+
+.handwriting {
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 30px;
+
+  line-height: 1.05;
+
+  transform: rotate(-7deg);
+}
+
+.tiny-heart {
+  color: #e6bd62;
+
+  font-size: 28px;
+
+  margin-top: 7px;
+}
+
+
+/* =========================================
+   RIGHT SUNFLOWER GARDEN
+   ========================================= */
+
+.auth-sunflower-garden {
+  position: absolute;
+
+  right: 4%;
+
+  bottom: 3%;
+
+  width: 250px;
+
+  height: 280px;
+
+  z-index: 3;
+}
+
+.garden-flower {
+  position: absolute;
+
+  filter:
+    drop-shadow(
+      0 7px 10px rgba(100, 75, 30, 0.12)
+    );
+}
+
+.garden-flower.big {
+  right: 10px;
+
+  bottom: 55px;
+
+  font-size: 125px;
+
+  transform: rotate(8deg);
+}
+
+.garden-flower.medium {
+  left: 20px;
+
+  bottom: 15px;
+
+  font-size: 85px;
+
+  transform: rotate(-8deg);
+}
+
+.garden-flower.small {
+  right: 90px;
+
+  top: 20px;
+
+  font-size: 48px;
+}
+
+.garden-leaves {
+  position: absolute;
+
+  bottom: -5px;
+
+  left: 50px;
+
+  font-size: 95px;
+
+  opacity: 0.7;
+}
+
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes cardAppear {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(20px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes flowerFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(-8deg);
+  }
+
+  50% {
+    transform:
+      translateY(-9px)
+      rotate(-3deg);
+  }
+}
+
+@keyframes butterflyFloat {
+
+  0%,
+  100% {
+    transform:
+      translate(0, 0)
+      rotate(-5deg);
+  }
+
+  50% {
+    transform:
+      translate(12px, -15px)
+      rotate(8deg);
+  }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 800px) {
+
+  .auth-side-message {
+    display: none;
+  }
+
+  .auth-sunflower-garden {
+    opacity: 0.45;
+
+    right: -70px;
+
+    bottom: -30px;
+  }
+
+  .flower-one {
+    left: -25px;
+
+    bottom: 3%;
+
+    font-size: 80px;
+  }
+
+  .flower-two {
+    left: auto;
+
+    right: -20px;
+
+    bottom: 2%;
+
+    font-size: 60px;
+  }
+
+  .flower-three {
+    right: 8%;
+
+    top: 8%;
+
+    font-size: 40px;
+  }
+
+  .butterfly-one {
+    left: 8%;
+  }
+
+  .butterfly-two {
+    right: 8%;
+  }
+}
+
+
+@media (max-width: 500px) {
+
+  .auth-page {
+    padding: 25px 14px;
+  }
+
+  .auth-card {
+    padding: 34px 24px 26px;
+
+    border-radius: 23px;
+  }
+
+  .auth-logo h1 {
+    font-size: 34px;
+  }
+
+  .auth-heading h2 {
+    font-size: 21px;
+  }
+
+  .auth-sunflower-garden {
+    display: none;
+  }
+}

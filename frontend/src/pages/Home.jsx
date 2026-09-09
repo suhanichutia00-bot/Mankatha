@@ -14,15 +14,74 @@ const Home = () => {
 
   return (
     <div className="home-container">
+
       <h1>Welcome to Mankatha 👋</h1>
 
-      {user && <h2>Hello, {user.name}!</h2>}
+      {user && <h2>Hello, {user.name}! 🌼</h2>}
 
-      <p>You are successfully logged in.</p>
+      <p>
+        Your little space for emotional wellness and self-reflection.
+      </p>
 
-      <button onClick={handleLogout}>
+      <div className="home-options">
+
+        {/* Mood Detection */}
+
+        <div className="home-card">
+
+          <div className="home-card-icon">
+            🌤️
+          </div>
+
+          <h3>Mood Detection</h3>
+
+          <p>
+            Express how you're feeling and let Mankatha
+            understand your current mood.
+          </p>
+
+          <button
+            onClick={() => navigate("/mood-detection")}
+          >
+            Detect My Mood →
+          </button>
+
+        </div>
+
+
+        {/* AI Chatbot */}
+
+        <div className="home-card chatbot-card">
+
+          <div className="home-card-icon">
+            🌻
+          </div>
+
+          <h3>AI Chatbot</h3>
+
+          <p>
+            Talk to Mankatha about your thoughts,
+            feelings, worries, or simply your day.
+          </p>
+
+          <button
+            onClick={() => navigate("/ai-chat")}
+          >
+            Talk to Mankatha →
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        className="logout-button"
+        onClick={handleLogout}
+      >
         Logout
       </button>
+
     </div>
   );
 };

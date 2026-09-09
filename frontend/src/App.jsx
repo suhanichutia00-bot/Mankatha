@@ -1,14 +1,25 @@
+import AIChatbot from "./pages/AIChatbot";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import MoodDetection from "./pages/MoodDetection";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+
+       <Route
+        path="/ai-chat"
+        element={
+        <ProtectedRoute>
+        <AIChatbot />
+        </ProtectedRoute>
+        }
+        />
 
         <Route
           path="/"
@@ -33,6 +44,15 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route
+        path="/mood-detection"
+        element={
+        <ProtectedRoute>
+        <MoodDetection />
+        </ProtectedRoute>
+        }
+      />
 
       </Routes>
     </BrowserRouter>
