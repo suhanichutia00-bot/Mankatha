@@ -86,6 +86,27 @@ const Home = () => {
   </button>
 </div>
 
+     <div className="home-card">
+
+          <div className="home-card-icon">
+            🌍
+          </div>
+
+          <h3>Multilingual Support</h3>
+
+          <p>
+            Express your thoughts in the language
+            you feel most comfortable with.
+          </p>
+
+          <button
+            onClick={() => navigate("/multilingual")}
+          >
+            Choose Language →
+          </button>
+
+        </div>
+
       </div>
 
 

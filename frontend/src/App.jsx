@@ -1,3 +1,4 @@
+import Multilingual from "./pages/Multilingual";
 import RiskDetection from "./pages/RiskDetection";
 import AIChatbot from "./pages/AIChatbot";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -12,6 +13,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+       <Route
+  path="/multilingual"
+  element={
+    <ProtectedRoute>
+      <Multilingual />
+    </ProtectedRoute>
+  }
+/>
 
        <Route
         path="/ai-chat"

@@ -1,243 +1,405 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AIChatbot.css";
 
 const AIChatbot = () => {
+  const navigate = useNavigate();
+
+  const [language, setLanguage] = useState("English");
+  const [started, setStarted] = useState(false);
+
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
+  const [mood, setMood] = useState(null);
+  const [risk, setRisk] = useState(null);
+
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const sendMessage = async () => {
-    if (!message.trim() || loading) return;
+  const startChat = () => {
+    setStarted(true);
+  };
 
-    const userMessage = message.trim();
-
-    const updatedMessages = [
-      ...messages,
-      {
-        role: "user",
-        text: userMessage,
-      },
-    ];
-
-    setMessages(updatedMessages);
-    setMessage("");
-    setLoading(true);
-
+  const detectMood = async (text) => {
     try {
-      const response = await fetch("http://localhost:5000/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: userMessage,
-          history: messages,
-        }),
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/predict",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text,
+          }),
+        }
+      );
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong");
+      if (!response.ok || !data.success) {
+        throw new Error("Mood detection failed.");
       }
 
-      setMessages([
-        ...updatedMessages,
+      return data;
+
+    } catch (error) {
+      console.error("Mood detection error:", error);
+
+      return null;
+    }
+  };
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+
+    if (!message.trim() || loading) {
+      return;
+    }
+
+    const userMessage = message.trim();
+
+    setMessage("");
+    setError("");
+    setLoading(true);
+
+    const userChatMessage = {
+      role: "user",
+      text: userMessage,
+    };
+
+    const updatedMessages = [
+      ...messages,
+      userChatMessage,
+    ];
+
+    setMessages(updatedMessages);
+
+    try {
+      // -----------------------------
+      // STEP 1: MOOD DETECTION
+      // -----------------------------
+
+      const moodResult = await detectMood(userMessage);
+
+      let detectedMood = null;
+
+      if (moodResult) {
+        detectedMood = moodResult.mood;
+
+        setMood(moodResult);
+      }
+
+      // -----------------------------
+      // STEP 2:
+      // SEND MESSAGE + MOOD TO GEMINI
+      // -----------------------------
+
+      const history = updatedMessages
+        .slice(-10)
+        .map((item) => ({
+          role: item.role,
+          text: item.text,
+        }));
+
+      const response = await fetch(
+        "http://localhost:5000/api/chat",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            message: userMessage,
+            history,
+            mood: detectedMood,
+            language,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message ||
+            "Unable to generate AI response."
+        );
+      }
+
+      // -----------------------------
+      // STEP 3:
+      // SAVE RISK RESULT
+      // -----------------------------
+
+      setRisk({
+        riskLevel: data.riskLevel,
+        reason: data.reason,
+        recommendedAction:
+          data.recommendedAction,
+      });
+
+      // -----------------------------
+      // STEP 4:
+      // SHOW MANKATHA RESPONSE
+      // -----------------------------
+
+      setMessages((prev) => [
+        ...prev,
         {
           role: "model",
           text: data.response,
         },
       ]);
+
     } catch (error) {
       console.error(error);
 
-      setMessages([
-        ...updatedMessages,
-        {
-          role: "model",
-          text: "Sorry, I couldn't connect to Mankatha right now. Please try again. 🌼",
-        },
-      ]);
-    }
-
-    setLoading(false);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
+      setError(
+        "Something went wrong. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
-  return (
-    <div className="chat-page">
+  const getRiskClass = () => {
+    if (!risk) return "";
 
-      <div className="sun-decoration"></div>
+    if (risk.riskLevel === "HIGH") {
+      return "risk-high";
+    }
 
-      <div className="chat-wrapper">
+    if (risk.riskLevel === "MODERATE") {
+      return "risk-moderate";
+    }
 
-        {/* Header */}
+    return "risk-low";
+  };
 
-        <header className="chat-header">
+  if (!started) {
+    return (
+      <div className="chat-container">
 
-          <div className="sun-icon">
-            ☀️
+        <button
+          className="back-button"
+          onClick={() => navigate("/home")}
+        >
+          ← Back
+        </button>
+
+        <div className="language-card">
+
+          <div className="chat-icon">
+            🌻
           </div>
 
-          <h1>Good to see you 🌼</h1>
+          <h1>Talk to Mankatha</h1>
 
           <p>
-            This is your little space to talk, reflect,
-            and let things out.
+            Choose the language you feel most
+            comfortable using.
           </p>
 
-        </header>
+          <select
+            value={language}
+            onChange={(e) =>
+              setLanguage(e.target.value)
+            }
+          >
+            <option value="English">
+              🇬🇧 English
+            </option>
 
+            <option value="Hindi">
+              🇮🇳 हिंदी
+            </option>
 
-        {/* Chat Card */}
+            <option value="Assamese">
+              অসমীয়া Assamese
+            </option>
 
-        <div className="chat-card">
+            <option value="Bengali">
+              বাংলা Bengali
+            </option>
+          </select>
 
-          {/* Top Bar */}
+          <button
+            className="start-chat-button"
+            onClick={startChat}
+          >
+            Start Chat 🌻
+          </button>
 
-          <div className="chat-topbar">
+        </div>
+      </div>
+    );
+  }
 
-            <div className="bot-profile">
+  return (
+    <div className="chat-container">
 
-              <div className="bot-avatar">
-                🌻
-              </div>
+      <div className="chat-header">
 
-              <div>
-                <div className="bot-name">
-                  Mankatha
-                </div>
+        <button
+          className="back-button"
+          onClick={() => navigate("/home")}
+        >
+          ← Home
+        </button>
 
-                <div className="bot-status">
-                  Your wellness companion
-                </div>
-              </div>
+        <div>
+          <h1>🌻 Mankatha</h1>
 
-            </div>
-
-            <div className="online-dot"></div>
-
-          </div>
-
-
-          {/* Messages */}
-
-          <div className="messages-container">
-
-            {messages.length === 0 && (
-
-              <div className="welcome-message">
-
-                <div className="welcome-flower">
-                  🌷
-                </div>
-
-                <h2>
-                  What's on your mind?
-                </h2>
-
-                <p>
-                  You can talk about your day,
-                  your feelings, stress, worries,
-                  or anything you'd like to share.
-                </p>
-
-              </div>
-
-            )}
-
-
-            {messages.map((msg, index) => (
-
-              <div
-                key={index}
-                className={`message-row ${
-                  msg.role === "user"
-                    ? "user"
-                    : "bot"
-                }`}
-              >
-
-                <div className="message-bubble">
-
-                  <span className="message-label">
-                    {msg.role === "user"
-                      ? "You"
-                      : "🌻 Mankatha"}
-                  </span>
-
-                  {msg.text}
-
-                </div>
-
-              </div>
-
-            ))}
-
-
-            {loading && (
-
-              <div className="message-row bot">
-
-                <div className="typing-bubble">
-
-                  <span></span>
-                  <span></span>
-                  <span></span>
-
-                </div>
-
-              </div>
-
-            )}
-
-          </div>
-
-
-          {/* Input */}
-
-          <div className="input-area">
-
-            <div className="input-wrapper">
-
-              <textarea
-                className="chat-input"
-                value={message}
-                onChange={(e) =>
-                  setMessage(e.target.value)
-                }
-                onKeyDown={handleKeyDown}
-                placeholder="Tell Mankatha what's on your mind..."
-                rows="2"
-              />
-
-              <button
-                className="send-button"
-                onClick={sendMessage}
-                disabled={loading || !message.trim()}
-                aria-label="Send message"
-              >
-                ➤
-              </button>
-
-            </div>
-
-            <p className="chat-disclaimer">
-              Mankatha is a wellness support tool and
-              not a replacement for professional care.
-            </p>
-
-          </div>
-
+          <p>
+            Language: <strong>{language}</strong>
+          </p>
         </div>
 
       </div>
+
+      <div className="chat-body">
+
+        {messages.length === 0 && (
+          <div className="welcome-message">
+
+            <div className="chat-icon">
+              🌻
+            </div>
+
+            <h2>
+              Hi! I'm Mankatha 💛
+            </h2>
+
+            <p>
+              You can talk to me about your
+              thoughts, feelings, worries,
+              or simply your day.
+            </p>
+
+          </div>
+        )}
+
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={
+              msg.role === "user"
+                ? "message user-message"
+                : "message ai-message"
+            }
+          >
+
+            <div className="message-label">
+              {msg.role === "user"
+                ? "You"
+                : "🌻 Mankatha"}
+            </div>
+
+            <div className="message-text">
+              {msg.text}
+            </div>
+
+          </div>
+        ))}
+
+        {loading && (
+          <div className="message ai-message">
+
+            <div className="message-label">
+              🌻 Mankatha
+            </div>
+
+            <div className="message-text">
+              Understanding what you shared... 🌼
+            </div>
+
+          </div>
+        )}
+
+      </div>
+
+      {(mood || risk) && (
+        <div className="analysis-card">
+
+          <h3>
+            🌼 Your Emotional Check-in
+          </h3>
+
+          {mood && (
+            <p>
+              🌤️ Detected Mood:
+              <strong>
+                {" "}
+                {mood.mood}
+              </strong>
+
+              {mood.confidence && (
+                <>
+                  {" "}
+                  ({mood.confidence}%)
+                </>
+              )}
+            </p>
+          )}
+
+          {risk && (
+            <div className={getRiskClass()}>
+
+              <p>
+                🛡️ Risk Level:
+                <strong>
+                  {" "}
+                  {risk.riskLevel}
+                </strong>
+              </p>
+
+              {risk.riskLevel === "HIGH" && (
+                <p className="emergency-message">
+                  🚨 Please contact a trusted
+                  person or local emergency
+                  service immediately if you
+                  are in immediate danger.
+                </p>
+              )}
+
+            </div>
+          )}
+
+        </div>
+      )}
+
+      {error && (
+        <div className="chat-error">
+          {error}
+        </div>
+      )}
+
+      <form
+        className="chat-input-area"
+        onSubmit={sendMessage}
+      >
+
+        <input
+          type="text"
+          value={message}
+          onChange={(e) =>
+            setMessage(e.target.value)
+          }
+          placeholder="Tell me how you're feeling..."
+        />
+
+        <button
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "..." : "Send 🌻"}
+        </button>
+
+      </form>
 
     </div>
   );
