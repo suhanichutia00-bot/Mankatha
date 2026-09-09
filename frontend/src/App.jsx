@@ -1,3 +1,4 @@
+import RiskDetection from "./pages/RiskDetection";
 import AIChatbot from "./pages/AIChatbot";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
@@ -53,6 +54,15 @@ const App = () => {
         </ProtectedRoute>
         }
       />
+
+      <Route
+      path="/risk-detection"
+      element={
+      <ProtectedRoute>
+      <RiskDetection/>
+      </ProtectedRoute>
+     }
+    />
 
       </Routes>
     </BrowserRouter>
