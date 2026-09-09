@@ -1,0 +1,278 @@
+.risk-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding: 40px 20px;
+  background:
+    radial-gradient(circle at 85% 10%, #fff0ae 0%, transparent 25%),
+    radial-gradient(circle at 10% 90%, #f6dce8 0%, transparent 25%),
+    var(--cream);
+}
+
+.risk-wrapper {
+  width: min(900px, 100%);
+  margin: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.risk-back-button {
+  border: none;
+  background: transparent;
+  color: var(--brown);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.risk-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.risk-icon {
+  font-size: 55px;
+  margin-bottom: 10px;
+}
+
+.risk-header h1 {
+  font-family: "Patrick Hand", cursive;
+  font-size: 48px;
+  margin: 0;
+  color: var(--brown);
+}
+
+.risk-header p {
+  max-width: 650px;
+  margin: 10px auto;
+  color: var(--brown-light);
+  line-height: 1.7;
+}
+
+.risk-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+  padding: 35px;
+  box-shadow: var(--shadow);
+}
+
+.risk-card-title {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.risk-card-title > span {
+  font-size: 35px;
+}
+
+.risk-card-title h2 {
+  margin: 0;
+  font-size: 23px;
+}
+
+.risk-card-title p {
+  margin: 5px 0 0;
+  color: var(--brown-light);
+}
+
+.risk-card textarea {
+  width: 100%;
+  min-height: 190px;
+  resize: vertical;
+  border: 2px solid #f1dfc5;
+  border-radius: 20px;
+  padding: 20px;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--brown);
+  background: #fffdf8;
+  outline: none;
+}
+
+.risk-card textarea:focus {
+  border-color: var(--sun);
+  box-shadow: 0 0 0 4px rgba(249, 214, 107, 0.15);
+}
+
+.risk-character-count {
+  text-align: right;
+  margin-top: 7px;
+  font-size: 13px;
+  color: var(--brown-light);
+}
+
+.risk-analyze-button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 16px;
+  border: none;
+  border-radius: 15px;
+  background: var(--sun);
+  color: var(--brown);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.risk-analyze-button:hover {
+  transform: translateY(-2px);
+  background: var(--sun-dark);
+}
+
+.risk-analyze-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.risk-error {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  background: #fde7e7;
+  color: #9b4d4d;
+  text-align: center;
+}
+
+.risk-result {
+  margin-top: 30px;
+  padding: 30px;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.risk-low {
+  background: #edf5e8;
+  border: 2px solid #d2e3c8;
+}
+
+.risk-moderate {
+  background: #fff6d9;
+  border: 2px solid #f3df9a;
+}
+
+.risk-high {
+  background: #fbe7e4;
+  border: 2px solid #efc4bd;
+}
+
+.risk-result-icon {
+  font-size: 45px;
+}
+
+.risk-result-label {
+  margin: 10px 0 3px;
+  color: var(--brown-light);
+  font-size: 14px;
+}
+
+.risk-result h2 {
+  margin: 0 0 15px;
+  font-size: 30px;
+}
+
+.risk-reason {
+  line-height: 1.7;
+  max-width: 650px;
+  margin: auto;
+}
+
+.risk-action {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.7);
+  text-align: left;
+}
+
+.risk-action p {
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.emergency-message {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 18px;
+  background: #fff;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.emergency-message p {
+  margin-bottom: 0;
+}
+
+.risk-footer {
+  text-align: center;
+  margin-top: 25px;
+  color: var(--brown-light);
+  font-size: 13px;
+}
+
+.risk-sun {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 70px;
+  opacity: 0.6;
+}
+
+.risk-flower {
+  position: absolute;
+  font-size: 55px;
+  opacity: 0.7;
+}
+
+.risk-flower-left {
+  bottom: 50px;
+  left: 30px;
+}
+
+.risk-flower-right {
+  bottom: 90px;
+  right: 35px;
+}
+
+.risk-butterfly {
+  position: absolute;
+  font-size: 30px;
+  opacity: 0.7;
+}
+
+.risk-butterfly-left {
+  top: 30%;
+  left: 7%;
+}
+
+.risk-butterfly-right {
+  top: 50%;
+  right: 8%;
+}
+
+@media (max-width: 600px) {
+  .risk-page {
+    padding: 25px 15px;
+  }
+
+  .risk-card {
+    padding: 22px;
+  }
+
+  .risk-header h1 {
+    font-size: 38px;
+  }
+
+  .risk-sun {
+    font-size: 45px;
+    right: 10px;
+  }
+
+  .risk-flower,
+  .risk-butterfly {
+    display: none;
+  }
+}

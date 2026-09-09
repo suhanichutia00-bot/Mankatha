@@ -71,6 +71,20 @@ const Home = () => {
           </button>
 
         </div>
+       <div className="home-card">
+  <div className="home-card-icon">🛡️</div>
+
+  <h3>Risk Detection</h3>
+
+  <p>
+    Check in with Mankatha and identify when you may need
+    additional emotional support.
+  </p>
+
+  <button onClick={() => navigate("/risk-detection")}>
+    Check My Wellbeing →
+  </button>
+</div>
 
       </div>
 
