@@ -1,0 +1,203 @@
+.multilingual-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding: 40px 20px;
+  background:
+    radial-gradient(circle at 85% 10%, #fff0ae 0%, transparent 25%),
+    radial-gradient(circle at 10% 90%, #f6dce8 0%, transparent 25%),
+    var(--cream);
+}
+
+.multilingual-wrapper {
+  width: min(800px, 100%);
+  margin: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.multi-back-button {
+  border: none;
+  background: transparent;
+  color: var(--brown);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.multi-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.multi-icon {
+  font-size: 55px;
+}
+
+.multi-header h1 {
+  font-family: "Patrick Hand", cursive;
+  font-size: 48px;
+  margin: 5px 0;
+  color: var(--brown);
+}
+
+.multi-header p {
+  color: var(--brown-light);
+  line-height: 1.7;
+}
+
+.multi-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 30px;
+  padding: 35px;
+  box-shadow: var(--shadow);
+}
+
+.multi-card h2 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.multi-card select {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #f1dfc5;
+  border-radius: 15px;
+  background: #fffdf8;
+  color: var(--brown);
+  font-size: 16px;
+  margin-bottom: 25px;
+  outline: none;
+}
+
+.multi-card textarea {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  padding: 18px;
+  border: 2px solid #f1dfc5;
+  border-radius: 20px;
+  background: #fffdf8;
+  color: var(--brown);
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+}
+
+.multi-card textarea:focus,
+.multi-card select:focus {
+  border-color: var(--sun);
+}
+
+.multi-character-count {
+  text-align: right;
+  color: var(--brown-light);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.multi-button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  border: none;
+  border-radius: 15px;
+  background: var(--sun);
+  color: var(--brown);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.multi-button:hover {
+  background: var(--sun-dark);
+}
+
+.multi-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.multi-error {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  background: #fde7e7;
+  color: #9b4d4d;
+  text-align: center;
+}
+
+.multi-result {
+  margin-top: 30px;
+  padding: 25px;
+  border-radius: 22px;
+  background: #edf5e8;
+  border: 2px solid #d2e3c8;
+  text-align: center;
+}
+
+.multi-result-icon {
+  font-size: 40px;
+}
+
+.multi-result p {
+  color: var(--brown-light);
+}
+
+.multi-result h3 {
+  font-size: 22px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.multi-footer {
+  text-align: center;
+  margin-top: 25px;
+  color: var(--brown-light);
+  font-size: 13px;
+}
+
+.multi-sun {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 70px;
+  opacity: 0.6;
+}
+
+.multi-flower {
+  position: absolute;
+  font-size: 55px;
+  opacity: 0.7;
+}
+
+.multi-flower-left {
+  bottom: 50px;
+  left: 30px;
+}
+
+.multi-flower-right {
+  bottom: 90px;
+  right: 35px;
+}
+
+@media (max-width: 600px) {
+  .multilingual-page {
+    padding: 25px 15px;
+  }
+
+  .multi-card {
+    padding: 22px;
+  }
+
+  .multi-header h1 {
+    font-size: 38px;
+  }
+
+  .multi-sun,
+  .multi-flower {
+    display: none;
+  }
+}

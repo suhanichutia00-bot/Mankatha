@@ -1,10 +1,20 @@
 const {
-  generateChatResponse,
+  analyzeMessage,
 } = require("../services/chatService");
 
 const chat = async (req, res) => {
   try {
-    const { message, history } = req.body;
+    const {
+      message,
+      history,
+      mood,
+      language,
+    } = req.body;
+
+    console.log("Chat API request received");
+    console.log("Message:", message);
+    console.log("Mood:", mood);
+    console.log("Language:", language);
 
     if (!message || !message.trim()) {
       return res.status(400).json({
@@ -13,15 +23,23 @@ const chat = async (req, res) => {
       });
     }
 
-    const response = await generateChatResponse(
+    const result = await analyzeMessage(
       message.trim(),
-      Array.isArray(history) ? history : []
+      Array.isArray(history) ? history : [],
+      mood || null,
+      language || "English"
     );
+
+    console.log("Integrated AI result:", result);
 
     return res.status(200).json({
       success: true,
-      response,
+      riskLevel: result.riskLevel,
+      reason: result.reason,
+      recommendedAction: result.recommendedAction,
+      response: result.response,
     });
+
   } catch (error) {
     console.error("Chatbot error:", error);
 

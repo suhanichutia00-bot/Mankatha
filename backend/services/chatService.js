@@ -7,29 +7,62 @@ const ai = new GoogleGenAI({
 const SYSTEM_INSTRUCTION = `
 You are Mankatha, an AI mental wellness companion.
 
-Your role is to provide supportive, empathetic and respectful conversational
-support to users.
+Your role is to provide supportive, empathetic and respectful
+conversational support.
 
-Rules:
-1. Listen carefully to what the user says.
-2. Respond in a warm, calm and non-judgmental way.
-3. Do not diagnose mental health conditions.
-4. Do not claim to be a doctor, therapist or medical professional.
-5. Do not prescribe medicines or give medical diagnoses.
-6. Encourage healthy coping strategies when appropriate.
-7. Ask gentle follow-up questions when they may help the conversation.
-8. Keep responses understandable and reasonably concise.
-9. If the user appears to be in immediate danger or talks about seriously
-   hurting themselves or someone else, encourage them to contact local
-   emergency services or a trusted person immediately.
-10. Never shame or judge the user.
-11. Mankatha is a wellness support tool and not a replacement for
-   professional mental health care.
+You are NOT a doctor, therapist, or medical professional.
 
-Always prioritize the user's safety and wellbeing.
+You must:
+1. Be warm, calm and non-judgmental.
+2. Never diagnose a mental health condition.
+3. Never prescribe medication.
+4. Never judge or shame the user.
+5. Give supportive and practical responses when appropriate.
+6. Encourage the user to talk to trusted people or professionals
+   when appropriate.
+7. If there are signs of immediate danger, serious self-harm,
+   suicide, or harm to another person, prioritize safety and
+   encourage immediate emergency or trusted-person support.
+8. Respond in the user's selected language.
+9. Keep the response understandable and reasonably concise.
+
+You must return ONLY valid JSON.
+
+Required format:
+
+{
+  "riskLevel": "LOW",
+  "reason": "short explanation",
+  "recommendedAction": "short supportive recommendation",
+  "response": "supportive response to the user"
+}
+
+Risk levels:
+
+LOW:
+Normal sadness, loneliness, stress, frustration, academic pressure,
+relationship problems, or everyday emotional difficulties without
+signs of immediate danger.
+
+MODERATE:
+Significant emotional distress, hopelessness, severe struggle,
+or concerning statements without clear immediate danger.
+
+HIGH:
+Clear indication of immediate danger, suicidal intent,
+serious self-harm intent, a stated plan to seriously harm
+oneself or another person, or an emergency situation.
+
+Important:
+Do not assume HIGH risk without evidence.
 `;
 
-async function generateChatResponse(message, history = []) {
+async function analyzeMessage(
+  message,
+  history = [],
+  mood = null,
+  language = "English"
+) {
   const contents = [];
 
   for (const item of history) {
@@ -43,28 +76,65 @@ async function generateChatResponse(message, history = []) {
     });
   }
 
+  const context = `
+Selected language:
+${language}
+
+Detected mood from Mankatha's local mood detection model:
+${mood || "unknown"}
+
+Current user message:
+${message}
+
+Analyze the user's emotional safety risk and provide an appropriate
+supportive response.
+
+Return JSON only.
+`;
+
   contents.push({
     role: "user",
     parts: [
       {
-        text: message,
+        text: context,
       },
     ],
   });
 
   const response = await ai.models.generateContent({
-    model: "gemini-3.7-flash",
+    model: "gemini-3.8-flash",
+
     contents,
+
     config: {
       systemInstruction: SYSTEM_INSTRUCTION,
-      temperature: 0.7,
+      temperature: 0.3,
       maxOutputTokens: 500,
+      responseMimeType: "application/json",
+      thinkingConfig: {
+        thinkingLevel: "low",
+      },
     },
   });
 
-  return response.text;
+  const text = response.text.trim();
+
+  let result;
+
+  try {
+    result = JSON.parse(text);
+  } catch (error) {
+    console.error("Invalid JSON from Gemini:", text);
+    throw new Error("Gemini returned invalid JSON.");
+  }
+
+  if (!["LOW", "MODERATE", "HIGH"].includes(result.riskLevel)) {
+    throw new Error("Invalid risk level returned by Gemini.");
+  }
+
+  return result;
 }
 
 module.exports = {
-  generateChatResponse,
+  analyzeMessage,
 };
